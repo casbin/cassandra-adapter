@@ -1,10 +1,10 @@
 package cassandra_adapter
 
 import (
-	"testing"
 	"github.com/hsluoyz/casbin"
-	"log"
 	"github.com/hsluoyz/casbin/util"
+	"log"
+	"testing"
 )
 
 func testGetPolicy(t *testing.T, e *casbin.Enforcer, res [][]string) {

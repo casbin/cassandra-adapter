@@ -3,13 +3,13 @@ package cassandra_adapter
 import (
 	"github.com/gocql/gocql"
 	"github.com/hsluoyz/casbin/model"
-	"strings"
-	"strconv"
 	"sort"
+	"strconv"
+	"strings"
 )
 
 type Adapter struct {
-	hosts []string
+	hosts   []string
 	session *gocql.Session
 }
 
