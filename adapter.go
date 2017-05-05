@@ -5,6 +5,7 @@ import (
 	"github.com/hsluoyz/casbin/model"
 	"strings"
 	"strconv"
+	"sort"
 )
 
 type Adapter struct {
@@ -74,6 +75,7 @@ func (a *Adapter) LoadPolicy(model model.Model) {
 	defer a.close()
 
 	var (
+		no    string
 		ptype string
 		v1    string
 		v2    string
@@ -81,8 +83,9 @@ func (a *Adapter) LoadPolicy(model model.Model) {
 		v4    string
 	)
 
-	iter := a.session.Query(`SELECT ptype, v1, v2, v3, v4 FROM casbin.policy`).Iter()
-	for iter.Scan(&ptype, &v1, &v2, &v3, &v4) {
+	lines := make(map[int]string)
+	iter := a.session.Query(`SELECT no, ptype, v1, v2, v3, v4 FROM casbin.policy`).Iter()
+	for iter.Scan(&no, &ptype, &v1, &v2, &v3, &v4) {
 		line := ptype
 		if v1 != "" {
 			line += ", " + v1
@@ -97,8 +100,18 @@ func (a *Adapter) LoadPolicy(model model.Model) {
 			line += ", " + v4
 		}
 
-		loadPolicyLine(line, model)
+		i, _ := strconv.Atoi(no)
+		lines[i] = line
 		// log.Println(ptype, v1, v2, v3, v4)
+	}
+
+	var keys []int
+	for k := range lines {
+		keys = append(keys, k)
+	}
+	sort.Ints(keys)
+	for _, k := range keys {
+		loadPolicyLine(lines[k], model)
 	}
 
 	if err := iter.Close(); err != nil {
