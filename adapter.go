@@ -16,7 +16,7 @@ package cassandra_adapter
 
 import (
 	"github.com/gocql/gocql"
-	"github.com/hsluoyz/casbin/model"
+	"github.com/casbin/casbin/model"
 	"sort"
 	"strconv"
 	"strings"

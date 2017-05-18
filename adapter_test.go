@@ -15,8 +15,8 @@
 package cassandra_adapter
 
 import (
-	"github.com/hsluoyz/casbin"
-	"github.com/hsluoyz/casbin/util"
+	"github.com/casbin/casbin"
+	"github.com/casbin/casbin/util"
 	"log"
 	"testing"
 )
