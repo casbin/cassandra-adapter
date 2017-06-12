@@ -22,7 +22,18 @@ func main() {
 	a := cassandra_adapter.NewAdapter("192.168.41.130") // Your Cassandra hosts. 
 	e := casbin.NewEnforcer("examples/rbac_model.conf", a)
 	
+	// Load the policy from DB.
+	e.LoadPolicy()
+	
+	// Check the permission.
 	e.Enforce("alice", "data1", "read")
+	
+	// Modify the policy.
+	// e.AddPolicy(...)
+	// e.RemovePolicy(...)
+	
+	// Save the policy back to DB.
+	e.SavePolicy()
 }
 ```
 
