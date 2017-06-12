@@ -34,7 +34,7 @@ func testGetPolicy(t *testing.T, e *casbin.Enforcer, res [][]string) {
 func TestAdapter(t *testing.T) {
 	e := casbin.NewEnforcer("examples/rbac_model.conf", "examples/rbac_policy.csv")
 
-	a := NewAdapter("192.168.41.130")
+	a := NewAdapter("127.0.0.1")
 	a.SavePolicy(e.GetModel())
 
 	e.ClearPolicy()
@@ -43,7 +43,7 @@ func TestAdapter(t *testing.T) {
 	a.LoadPolicy(e.GetModel())
 	testGetPolicy(t, e, [][]string{{"alice", "data1", "read"}, {"bob", "data2", "write"}, {"data2_admin", "data2", "read"}, {"data2_admin", "data2", "write"}})
 
-	a = NewAdapter("192.168.41.130")
+	a = NewAdapter("127.0.0.1")
 	e = casbin.NewEnforcer("examples/rbac_model.conf", a)
 	testGetPolicy(t, e, [][]string{{"alice", "data1", "read"}, {"bob", "data2", "write"}, {"data2_admin", "data2", "read"}, {"data2_admin", "data2", "write"}})
 }
