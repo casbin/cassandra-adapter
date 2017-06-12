@@ -15,11 +15,12 @@
 package cassandra_adapter
 
 import (
-	"github.com/gocql/gocql"
-	"github.com/casbin/casbin/model"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/casbin/casbin/model"
+	"github.com/gocql/gocql"
 )
 
 type Adapter struct {
