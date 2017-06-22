@@ -19,7 +19,7 @@ import (
 
 func main() {
 	// Initialize a Cassandra adapter and use it in a Casbin enforcer:
-	a := cassandra-adapter.NewAdapter("127.0.0.1") // Your Cassandra hosts. 
+	a := cassandraadapter.NewAdapter("127.0.0.1") // Your Cassandra hosts. 
 	e := casbin.NewEnforcer("examples/rbac_model.conf", a)
 	
 	// Load the policy from DB.
