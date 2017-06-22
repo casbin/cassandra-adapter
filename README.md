@@ -1,11 +1,11 @@
-Cassandra Adapter [![Build Status](https://travis-ci.org/casbin/cassandra_adapter.svg?branch=master)](https://travis-ci.org/casbin/cassandra_adapter) [![Coverage Status](https://coveralls.io/repos/github/casbin/cassandra_adapter/badge.svg?branch=master)](https://coveralls.io/github/casbin/cassandra_adapter?branch=master) [![Godoc](https://godoc.org/github.com/casbin/cassandra_adapter?status.svg)](https://godoc.org/github.com/casbin/cassandra_adapter)
+Cassandra Adapter [![Build Status](https://travis-ci.org/casbin/cassandra-adapter.svg?branch=master)](https://travis-ci.org/casbin/cassandra-adapter) [![Coverage Status](https://coveralls.io/repos/github/casbin/cassandra-adapter/badge.svg?branch=master)](https://coveralls.io/github/casbin/cassandra-adapter?branch=master) [![Godoc](https://godoc.org/github.com/casbin/cassandra-adapter?status.svg)](https://godoc.org/github.com/casbin/cassandra-adapter)
 ====
 
 Cassandra Adapter is the [Apache Cassandra DB](http://cassandra.apache.org/) adapter for [Casbin](https://github.com/casbin/casbin). With this library, Casbin can load policy from Cassandra or save policy to it.
 
 ## Installation
 
-    go get github.com/casbin/cassandra_adapter
+    go get github.com/casbin/cassandra-adapter
 
 ## Simple Example
 
@@ -14,12 +14,12 @@ package main
 
 import (
 	"github.com/casbin/casbin"
-	"github.com/casbin/cassandra_adapter"
+	"github.com/casbin/cassandra-adapter"
 )
 
 func main() {
 	// Initialize a Cassandra adapter and use it in a Casbin enforcer:
-	a := cassandra_adapter.NewAdapter("127.0.0.1") // Your Cassandra hosts. 
+	a := cassandra-adapter.NewAdapter("127.0.0.1") // Your Cassandra hosts. 
 	e := casbin.NewEnforcer("examples/rbac_model.conf", a)
 	
 	// Load the policy from DB.
