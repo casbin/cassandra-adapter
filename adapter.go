@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cassandra_adapter
+package cassandraadapter
 
 import (
 	"sort"
@@ -85,7 +85,7 @@ func loadPolicyLine(line string, model model.Model) {
 	model[sec][key].Policy = append(model[sec][key].Policy, tokens[1:])
 }
 
-func (a *Adapter) LoadPolicy(model model.Model) {
+func (a *Adapter) LoadPolicy(model model.Model) error {
 	a.open()
 	defer a.close()
 
@@ -130,11 +130,12 @@ func (a *Adapter) LoadPolicy(model model.Model) {
 	}
 
 	if err := iter.Close(); err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }
 
-func (a *Adapter) writeTableLine(no int, ptype string, rule []string) {
+func (a *Adapter) writeTableLine(no int, ptype string, rule []string) error {
 	line := "'" + strconv.Itoa(no) + "','" + ptype + "'"
 	for i := range rule {
 		line += ",'" + rule[i] + "'"
@@ -145,12 +146,13 @@ func (a *Adapter) writeTableLine(no int, ptype string, rule []string) {
 
 	err := a.session.Query("INSERT INTO casbin.policy (no,ptype,v1,v2,v3,v4) values(" + line + ")").Exec()
 	if err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }
 
 // SavePolicy saves policy to database.
-func (a *Adapter) SavePolicy(model model.Model) {
+func (a *Adapter) SavePolicy(model model.Model) error {
 	a.open()
 	defer a.close()
 
@@ -160,15 +162,20 @@ func (a *Adapter) SavePolicy(model model.Model) {
 	no := 0
 	for ptype, ast := range model["p"] {
 		for _, rule := range ast.Policy {
-			a.writeTableLine(no, ptype, rule)
+			if err := a.writeTableLine(no, ptype, rule); err != nil {
+				return err
+			}
 			no += 1
 		}
 	}
 
 	for ptype, ast := range model["g"] {
 		for _, rule := range ast.Policy {
-			a.writeTableLine(no, ptype, rule)
+			if err := a.writeTableLine(no, ptype, rule); err != nil {
+				return err
+			}
 			no += 1
 		}
 	}
+	return nil
 }
