@@ -32,17 +32,30 @@ func testGetPolicy(t *testing.T, e *casbin.Enforcer, res [][]string) {
 }
 
 func TestAdapter(t *testing.T) {
+	// Because the Cassandra DB is empty at first,
+	// so we need to load the policy from the file adapter (.CSV) first.
 	e := casbin.NewEnforcer("examples/rbac_model.conf", "examples/rbac_policy.csv")
 
 	a := NewAdapter("127.0.0.1")
+	// This is a trick to save the current policy to the Cassandra DB.
+	// We can't call e.SavePolicy() because the adapter in the enforcer is still the file adapter.
+	// The current policy means the policy in the Casbin enforcer (aka in memory).
 	a.SavePolicy(e.GetModel())
 
+	// Clear the current policy.
 	e.ClearPolicy()
 	testGetPolicy(t, e, [][]string{})
 
+	// Load the policy from Cassandra DB.
 	a.LoadPolicy(e.GetModel())
 	testGetPolicy(t, e, [][]string{{"alice", "data1", "read"}, {"bob", "data2", "write"}, {"data2_admin", "data2", "read"}, {"data2_admin", "data2", "write"}})
 
+	// Note: you don't need to look at the above code
+	// if you already have a working Cassandra DB with policy inside.
+
+	// Now the Cassandra DB has policy, so we can provide a normal use case.
+	// Create an adapter and an enforcer.
+	// NewEnforcer() will load the policy automatically.
 	a = NewAdapter("127.0.0.1")
 	e = casbin.NewEnforcer("examples/rbac_model.conf", a)
 	testGetPolicy(t, e, [][]string{{"alice", "data1", "read"}, {"bob", "data2", "write"}, {"data2_admin", "data2", "read"}, {"data2_admin", "data2", "write"}})
