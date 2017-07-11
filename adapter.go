@@ -23,11 +23,13 @@ import (
 	"github.com/gocql/gocql"
 )
 
+// Adapter represents the Cassandra adapter for policy storage.
 type Adapter struct {
 	hosts   []string
 	session *gocql.Session
 }
 
+// NewAdapter is the constructor for Adapter.
 func NewAdapter(hosts ...string) *Adapter {
 	a := Adapter{}
 	a.hosts = hosts
@@ -85,6 +87,7 @@ func loadPolicyLine(line string, model model.Model) {
 	model[sec][key].Policy = append(model[sec][key].Policy, tokens[1:])
 }
 
+// LoadPolicy loads policy from database.
 func (a *Adapter) LoadPolicy(model model.Model) error {
 	a.open()
 	defer a.close()
