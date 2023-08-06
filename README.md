@@ -1,4 +1,4 @@
-Cassandra Adapter [![Build Status](https://travis-ci.org/casbin/cassandra-adapter.svg?branch=master)](https://travis-ci.org/casbin/cassandra-adapter) [![Coverage Status](https://coveralls.io/repos/github/casbin/cassandra-adapter/badge.svg?branch=master)](https://coveralls.io/github/casbin/cassandra-adapter?branch=master) [![Godoc](https://godoc.org/github.com/casbin/cassandra-adapter?status.svg)](https://godoc.org/github.com/casbin/cassandra-adapter)
+Cassandra Adapter [![Coverage Status](https://coveralls.io/repos/github/casbin/cassandra-adapter/badge.svg?branch=master)](https://coveralls.io/github/casbin/cassandra-adapter?branch=master) [![Godoc](https://godoc.org/github.com/casbin/cassandra-adapter?status.svg)](https://godoc.org/github.com/casbin/cassandra-adapter)
 ====
 
 Cassandra Adapter is the [Apache Cassandra DB](http://cassandra.apache.org/) adapter for [Casbin](https://github.com/casbin/casbin). With this library, Casbin can load policy from Cassandra or save policy to it.
